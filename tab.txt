@@ -1,0 +1,333 @@
+
+EXEP -2 
+
+
+Aim: - To design and simulation of 50ohm microstrip line using HFSS
+
+Process
+1. Insert hfss design and draw rectangle start from origin than double click on 
+rectangle 1 and give it name ground and after going to create a rectangle size 
+of 20*40 x=20 and y=40
+
+2. Now we design box , click on draw box on x,y,z direction and give it name 
+substrate and change its material to FR4_epoxy position=0,0,0, and 
+x=20,y=40 and z=1.6(thickness).
+
+3. Design microstrip line top of the substrate , draw rectangle and give it name 
+line and change dimension ,middle of the substrate position =10-1.5,0,1.6 
+x=3,y=40 .
+
+4. Assign perfect E boundary to line and ground right click->assign boundary-
+>perfect E.
+
+5. We give port 1 and port2 both side of strip line. Change the plane zx and 
+Draw rectangle and connecting the microstrip line to ground , give it name 
+port1,position =8.5,0,1.6 x=3mm,z=-1.6
+
+6. Click on port1 ,right click->assign excitation ->lumped port, resistance=50ohm 
+and change integration line->new line->add strip to ground (triangle point)-
+>next and finish
+
+7. Repeat step 6 for port 2 that was other side if strip.
+
+8. Design radiation box , xy plane,click on draw box->double click on box1->give 
+it name redbox->change material->air->change the transparency (0to1)
+
+9. Create box->position=-10,-10,-20, x=40,y=60,z=40mm
+
+10. Right click on rad box->assign boundary->radiation
+
+11. Go to analysis->right click ->add solution setup->set solution frequency 
+=5Ghz->ok
+
+12. Setup1->right click->add frequency sweep->sweep type->fast and 
+start=1,stop=20 step=0.1 and then click on display->ok
+
+13. Click on validate and then analyse all.
+
+14. Results->right click->create model solution data report->rectangular plot->s 
+parameter->select all quantity and select db as function->new report.
+
+
+
+EXP - 3
+
+
+Aim: - To design and analysis of H-Plane Tee using HFSS software.
+
+Process
+1. Click on draw box and give it dimensions x=22.86,y=100,z=10.16 
+and position=-11.43,0,-5.08
+
+2. Right click on box->edit->duplicate->around axis(z) and repeat 
+this step again for -90 degree .
+
+3. Select all 3 box and right click->edit->Boolean->unite.
+
+4. Give excitation to all side arm of tree boxes select phase->right 
+click->assign excitation->wave port->new line->draw on phase , 
+for others two port do same as.
+
+5. Analysis->add solution setup->solution frequency ->10Ghz.
+
+6. Select all phases except 3 port ->right click->assign boundary-
+>perfect E->ok.
+
+7. Analysis->setup1->add frequency sweep->start=6,stop=20
+
+8. Analysis ->analysis all->save.
+
+9. Select all object->plot fields->E->vector.
+
+10. Field overlays->E field->vector_E1->right click->animate->ok.
+
+11. Select one phase->right click-> plot fields->E->mag_E.
+
+12. Mag_E->animate->ok.
+
+13. Results->right click->create modal solution data report-
+>rectangular plot->new report.
+
+
+
+EXP - 4
+
+
+Aim: -To design and analysis of dipole antenna in HFSS operating frequency 
+f0=800Mhz
+
+
+Process
+1.we want to design a dipole antenna for operating frequency equal 
+to; f0=800Mhz 
+We know that
+C=f*lambda then lambda=c/f=3*108/800 MHz
+lambda=375mm
+dipole length=lambda/2,l=lambda/2=375/2=187.5mm
+Arm length=lambda/4=187.5/2=93.75mm
+
+2.insert hfss design->draw cylinder ->height=93.75mm,radius=6mm
+Position=0,0,6
+
+3.create duplicate of first cylinder(right click->edit->duplicate->around 
+axis->axis(y),angle(180degree).
+
+4.right click on cylinder1 in command window->change material-
+>copper and do the same for second cylinders.
+
+5.draw rectangle in YZ axis ->y=6mm,z=12mm,position=0,-3,-6
+
+6.select rectangle->right click->excitation->lumped port->line->one to 
+other side of rectangle->impedance=73ohm->ok.
+
+7.draw box->give it name radiation boundary->x=200,y=200,z=400 
+and position=-100,-100,-200.
+
+8.right click on big radiation box->assign boundary->radiation =>ok.
+
+9.analysis->add solution setup->frequency=800mhz->minimum 
+number of frames=20.
+
+10 Analysis->setup1->add frequency sweep->sweep type->fast-
+>type->linear count start=600mhz,stop=1000mhz,count=100.
+
+11 Validate ->analyse all->save.
+
+12 Hfss->radiation->insert far field setup->infinite sphere –>theta->
+-180degree->ok.
+
+13. Results->right click->create modal solution data report-
+>rectangular plot->s parameter->new report.
+
+14.not desired output (we don’t get dip at 800 MHz)so we change or 
+reduce dipole height.
+
+15. Results->right click->create far field report->radiation pattern-
+>category->gain->total gain->db->new report
+
+16. for 3d check, Results->right click->create far field report->3-d 
+polar plot->gain->total gain->db->new report 
+
+
+
+
+EXP - 5 
+
+
+Aim: - To design and analysis magic tee using the HFSS software.
+
+Process
+1. Draw box->YZ plane->position=0,-0.45,0 and x=2,y=0.9,z=0.4
+
+2. Select box and copy and paste ->click on boxes separately and 
+rotate it along z axis +90 degree or -90 degree .
+
+3. For fourth arm we change our axis(xy)->draw box ->position=-
+0.45,-0.2,0 and x=0.9,y=0.4,z=2
+
+4. Pressing ctrl and select all boxes ->right click->edit->Boolean-
+>unite.
+
+5. Assign boundary or it is default in hfss.
+
+6. Select particular phase for excitation to making port ->right click-
+>assign excitation ->wave port->new line.
+
+7. Similar for other 3 ports .
+
+8. analysis->add solution setup->solution frequency=9Ghz.
+
+9. Validate->analyse all.
+
+10. Right click on box1->plot fields->E->mag_E
+
+11. Mag_E->animate->ok
+
+12. Give input and check output at different port.
+
+13. Excitation->edit sources->give 1 at port 3 and check plot 
+field.
+
+14. Right click on box1->plot fields->E->mag_E
+
+15. Right click on box1->plot fields->E->vector _E
+
+16. Result -> solution data
+
+
+
+EXP- 6
+
+
+Aim: -To study the Repeller mode characteristics of the Reflex
+
+
+Procedure:
+I. Carrier Wave Operation 
+1. Connect the components and equipment as shown in the Fig. 
+2. Set the Variable Attenuator at the maximum attenuation position. 
+3. Set the Mod-Switch of Klystron Power Supply at CW position, beam voltage 
+control knob to fully anti clockwise and reflector voltage control knob to fully 
+clock wise and the Meter Switch to ‘OFF ‘position. 
+4. Rotate the Knob of frequency meter to one side fully. 
+5. First connect the D.C micro-ammeter with Detector. 
+6. Switch on the Klystron Power Supply, VSWR Meter and Cooling fan. 
+7. Switch on beam voltage and rotate the knob slowly clockwise up to 250 V. 
+Observe beam current value. “The Beam Current should be less than 30 mA” 
+8. Vary the reflector voltage slowly and watch ammeter. Set the voltage for 
+maximum deflection in the meter. 
+9. Tune the plunger of Klystron Mount for the maximum output. 
+Block Diagram: -
+10. Rotate the Knob of frequency meter slowly. At some particular position 
+there will be a dip in micro-ammeter. Note down the frequency meter 
+reading where output current is lowest. Read frequency directly between two 
+horizontal lines and vertical marker in case of direct reading type wave meter 
+and use the frequency chart to find frequency from micrometre reading. 
+11. Change the reflector voltage and read the current and frequency for each 
+reflector voltage. 
+II. Square Wave Operation 
+1. Connect the equipment and components as shown in the Fig 1. 
+2. Set Micrometer of variable attenuator at some position. 
+3. Set the range switch of VSWR meter at 40 dB position, input selector switch 
+to crystal impedance position, meter switch to narrow position. 
+4. Set Mod-selector switch to AM-MOD position, beam voltage control knob to 
+fully anticlockwise position. 
+5. Switch ‘ON’ the Klystron Power Supply, VSWR meter and cooling fan. Wait for 
+few minutes. 
+6. Switch ‘ON’ the Beam voltage switch and rotate the beam voltage knob 
+clockwise up to 300 V deflections in meter. 
+7. Keep the AM-MOD amplitude knob and AM-FRE, knob at the mid position. 
+8. Rotate the reflector voltage knob to get deflection in VSWR meter. 
+9. Rotate the AM-MOD amplitude knob to get the maximum output in VSWR 
+meter. 
+10. Maximize the deflection with frequency knob to get the maximum output 
+in VSWR meter. 
+11. If necessary, change the range switch of VSWR meter 30 dB or 50 dB if 
+the deflection in VSWR meter is out of scale or less than normal scale 
+respectively. Further the output can also be reduced by variable attenuator 
+to set the output for any particular value. 
+III. Mode study on Oscilloscope. 
+1. Set up the components and equipment as shown in Fig. 
+2. Keep position of variable attenuator at minimum attenuation position. 
+3. Set mode selector switch to FM-MOD position, FM amplitude and FM 
+frequency knob at mid position, keep beam voltage knob fully anticlockwise 
+and reflector voltage knob to fully clockwise and Beam switch to ‘OFF’ 
+position. 
+4. Keep the Time/division scale of oscilloscope around 100Hz frequency 
+(t=0.01sec) measurement and Volt/division to lower scale.
+5. Switch ‘ON’ the Klystron Power Supply and Oscilloscope. 
+6. Switch ‘ON’ Beam voltage and set beam voltage to 300 V by beam voltage 
+control knob. 
+7. Keep amplitude knob of FM Modulator to maximum position and rotate the 
+reflector voltage anticlockwise to get modes on the oscilloscope. The 
+horizontal axis represents reflector voltage and vertical axis represents 
+output power. 
+8. By changing the reflector voltage and amplitude of FM modulation, any mode 
+of Klystron tube can be seen on Oscilloscope. 
+
+
+
+EXP -7 
+
+Aim: - To study the I-V characteristics of Gunn diode.
+
+Procedure:
+• Set the components and equipment as shown in the Fig 2. 
+• Initially set the variable attenuator for maximum attenuation. 
+• Keep the control knobs of Gunn power supply as below Meter switch –
+‘OFF’ Gunn bias knob – Fully anticlockwise Pin bias knob – Fully anticlockwise Pin mod frequency – Any position. 
+• Keep the control knobs of VSWR meter as below Meter switch – Normal 
+Input switch – Low Impedance Range dB switch – 40 dB Gain control 
+knob – Fully clockwise. 
+• Set the micrometre of Gunn oscillator for required frequency of operation. 
+• Switch ‘ON’ the Gunn power supply, VSWR meter and Cooling fan. 
+• Measure the Gunn diode current corresponding to various voltages from 
+the panel meter by turning meter switch to voltage and current positions. 
+Do not exceed the bias voltage above 10Volts. 
+• Plot the voltage and current readings on the graph as shown in Fig 
+1. 
+• Measure the threshold voltage which corresponds to maximum current. 
+
+
+Precautions: -
+• make sure to set the values in gun power supply to default. 
+• make sure that the output is connected to the oscilloscope.
+
+
+EXP -8
+
+
+Aim: -
+ To demonstrate that the transmitting and receiving radiation patterns of an antenna 
+are equal and hence confirm the reciprocity theorem of antennas.
+
+
+EQUIPMENT REQUIRED: -
+ATS04 with stepper motor controller, Dipole & Yagi antenna, Antenna pod and 
+stepper pod with connecting cables 
+PROCEDURE: -
+1. Connect the Yagi Antenna to receiver stepper pod and set the frequency to 
+3.8GHz. Keep the antenna in horizontal plane. 
+2. Now connect a dipole antenna to the transmitter pod. 
+3. Point the Yagi antenna is the direction of dipole with their elements parallel 
+to each other as per figure. 
+4. Set the distance between the antennas to be around 1m. Remove any stray 
+object from around the antennas, especially in the line of sight. 
+Avoid any unnecessary movement while taking the readings. 
+5. Now rotate the Yagi antenna around its axis in steps of 5 degrees using 
+stepper motor controller. Take the readings in ATS04 receiver at each step 
+and note down. Plot the readings on the graph paper provided at back. 
+6. Now without disturbing the setup, connect the antenna at stepper pod to the 
+transmitter. Do not disturb their directions. Now Yagi is connected to 
+transmitter and dipole at receiver. Take another set of readings by rotating 
+the transmitter stepper pod from the controller every 5 degrees. 
+7. Keep in mind that it is antenna that is being rotated is plotted in reception 
+and transmission mode both for proving the reciprocity theorem. 
+8. Observe the two plots and find if they are any different from each other. 
+9.Plot these readings on Cartesian plane with distance between antennas on X 
+axis and signal level in dB as Y-axis. 
+
+
+
+
+
