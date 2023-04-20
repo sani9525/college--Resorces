@@ -1,0 +1,348 @@
+Optical Communication Lab
+
+
+                          EXP - 1
+
+AIM:  Write a octave program to calculate the values of refractive index and critical angle for following cases:
+a. Light going from Water to air
+b. Light going from Glass to air
+c. Light going from Glass to Water
+
+
+
+clc;
+clear all;
+
+% Input parameters
+speed_of_light = 3e8;  %Speed of light in m/s
+n_air = 1;             % Refractive index of air
+n_water = 1.33;        % Refractive index of water
+n_glass = 1.5;         % Refractive index of glass
+
+% Calculate refractive index and critical angle for water to air
+n_wa = n_water / n_air;
+theta_ca_wa = asind(n_air / n_water);
+
+% Calculate refractive index and critical angle for glass to air
+n_ga = n_glass / n_air;
+theta_ca_ga = asind(n_air / n_glass);
+
+% Calculate refractive index and critical angle for glass to water
+n_gw = n_glass / n_water;
+theta_ca_gw = asind(n_water / n_glass);
+
+%Display results
+disp(['Refractive index (water to air): ' num2str(n_wa)]);
+disp(['Critical angle (water to air): ' num2str(theta_ca_wa) ' degrees']);
+disp(['Refractive index (glass to air): ' num2str(n_ga)]);
+disp(['Critical angle (glass to air): ' num2str(theta_ca_ga) ' degrees']);
+disp(['Refractive index (glass to water): ' num2str(n_gw)]);
+disp(['Critical angle (glass to water): ' num2str(theta_ca_gw) ' degrees']);
+
+
+
+
+
+
+                       EXP - 2
+
+AIM:- Write an octave program to calculate the values of Numerical Aperture, Acceptance Angle and Solid Angle at given optical fiber index
+
+
+
+clc;
+clear all;
+
+% Input parameters
+n_core = 1.5; % Refractive index of fiber core
+n_clad = 1.45; % Refractive index of fiber cladding
+NA = sqrt(n_core^2 - n_clad^2); % Numerical aperture
+theta_max = asind(NA); %Acceptance angle in degrees
+theta_max_rad = deg2rad(theta_max); % Acceptance angle in radians
+Omega = 2*pi*(1-cos(theta_max_rad)); % Solid angle
+
+% Display results
+disp(['Numerical aperture: ' num2str(NA)]);
+disp(['Acceptance angle: ' num2str(theta_max) ' degrees']);
+disp(['Solid angle: ' num2str(Omega) ' steradians']);
+
+
+
+
+
+
+                                 EXP - 3
+
+AIM:- Write an octave program to calculate the values of Numerical Aperture and Refractive Index of graded index fiber
+
+
+
+clc;
+clear all;
+
+% Input parameters
+a = 50e-6; % Core radius in meters
+n_core = 1.5; % Refractive index at the center of the core
+n_clad = 1.45; %  Refractive index of the cladding
+alpha = 2; %  Grading parameter
+r = 30e-6; % Radial distance from fiber axis in meters
+
+% Calculate numerical aperture and refractive index at given radial distance
+NA = sqrt(n_core^2 - n_clad^2); % Numerical aperture
+n_r = n_core*sqrt(1 - alpha*(r/a)^2); % Refractive index at given radial distance
+
+% Display results
+disp(['Numerical aperture: ' num2str(NA)]);
+disp(['Refractive index at r = ' num2str(r*1e6) ' um: ' num2str(n_r)]);
+
+
+
+
+
+                               EXP - 4
+
+AIM:-  To check whether the optical fiber is single-mode or multi-mode in step index and graded index fiber
+
+
+
+
+clc;
+clear all;
+
+c = 299792458; % speed of light in m/s
+lambda = input("Enter the operating wavelength in meters: ");
+a = input("Enter the core radius in meters: ");
+NA = input("Enter the numerical aperture: ");
+n1 = input("Enter the refractive index of the core: ");
+n2 = input("Enter the refractive index of the cladding: ");
+deltan = n1 - n2;
+
+% Calculate the normalized frequency V
+V = (2 * pi * a * NA) / lambda;
+
+% Calculate the mode field diameter MFD
+if deltan == 0 % Step-index fiber
+  MFD = (2.44 * a) * (1 + (2 * V^2))^0.5;
+else %  Graded-index fiber
+  MFD = (2 * a) * (0.65 + 1.619 * V^1.5 + 2.879 * V^4);
+endif
+
+% Determine whether the fiber is single-mode or multi-mode
+if MFD < 1.5 * lambda / pi % Single-mode fiber
+  disp("The fiber is single-mode");
+else % Multi-mode fiber
+  disp("The fiber is multi-mode");
+endif
+
+
+
+
+INPUT FOR SIGNAL MODE:-
+
+Enter the operating wavelength in meters: 1.553-6
+Enter the core radius in meters: 3.5e-6
+Enter the numerical aperture: 0.12
+Enter the refractive index of the core: 1.46
+Enter the refractive index of the cladding: 1.44
+
+
+
+INPUT FOR MULTI-MODE :
+
+Enter the operating wavelength in meters: 133E-5
+Enter the core radius in meters: 1.2
+Enter the numerical aperture: 0.2
+Enter the refractive index of the core: 0.8
+Enter the refractive index of the cladding: 0.4
+
+
+
+
+
+                               EXP - 5
+
+AIM:- Write a program in octave for Light Power & Maximum Transmission Distance
+
+
+
+clc;
+clear all;
+
+ %given parameters
+L = 5; % fiber length in km
+NA = 0.275; %numerical aperture
+c = 3E5; % speed of light in km/s
+n1 = 1.48; % refractive index
+
+%part 1: calculate light pulse spreading and deltatsi per length
+p = 2 * c * n1;
+e = NA * NA;
+d = L * e;
+deltasi = (d/p)*1e9;
+Q = (deltasi/L);
+
+disp(['Light pulse spreading = ' num2str(deltasi,'%.2f') ' ns']);
+disp(['Deltatsi per length = ' num2str(Q,'%.2f') ' ns/km']);
+
+% part 2: calculate maximum bit rate
+deltasi_by_L = deltasi / L;
+maximum_bit_rate = 1e3 / deltasi_by_L;
+
+disp(['Maximum bit rate = ' num2str(maximum_bit_rate,'%.1f') ' Mbits/s']);
+
+
+
+
+
+
+
+                             EXP - 6
+
+AIM:- Write a program in octave for distance covered by light pulse & it's  Maximum bit rate
+
+
+
+
+
+clc;
+clear all;
+
+c = 299792458; % speed of light in m/s
+n = input("Enter the refractive index of the medium: ");
+L = input("Enter the length of the medium in meters: ");
+
+% Calculate the distance covered by the light pulse
+d = n * L;
+
+% Calculate the maximum bit rate
+B = c / (2 * L * log2(n+1));
+
+% Display the results
+disp("Distance covered by the light pulse:");
+disp(d);
+disp("Maximum bit rate:");
+disp(B);
+
+
+
+INPUT :- 
+
+Enter the refractive index of the medium: 1.2
+Enter the length of the medium in meters: 10
+
+
+
+
+
+                                   EXP -7
+
+
+AIM:- Write a octave program to find limitation in Transmission Length, chromatic dispersion & pulse spreading of light.
+
+
+
+%fine parameters for the fiber and system
+L= 100; % Length of the fiber in km
+alpha = 0.2; % Attenuation coefficient of the fiber in dB/km
+NA = 0.2; % Numerical aperture of the fiber
+a = 10; % Core radius of the fiber in microns
+lambda = 1.55; % Wavelength of light in microns
+DataRate = 1; %data rate in Gbps
+PulseWidth = 10; % Pulse width in ps
+%calculate the dispersion, pulse spreading, and transmission length
+D = 17 * (lambda / 1000)^2* ((NA^2)/(2* (a / 1000))^2); % Chromatic dispersion in ps/(nm*km)
+PulseSpread = D * L * PulseWidth^2; % Pulse spreading in ps
+TxBandwidth = DataRate* 1e9; % Transmitter bandwidth in Hz
+RxBandwidth = TxBandwidth; % Receiver bandwidth in Hz
+TransmissionLength = (TxBandwidth / (2 * D * (PulseWidth/1000)^2))^(1/3)/1000; % Transmission length in km
+% Display the results
+fprintf('Chromatic dispersion: 0.4f ps/(n*km)\n', D);
+fprintf('Pulse spreading: 0.4f ps\n', PulseSpread);
+fprintf('Maximum transmission length: %0.2f km\n', TransmissionLength);
+
+
+
+
+                                 EXP -8
+
+AIM:- Write a program in octave to find power leakage & Intrinsic Loss of  fiber
+
+
+
+
+%define parameters for the fiber
+L = 10; % Length of the fiber in km
+alpha = 0.2; % Attenuation coefficient of the fiber in dB/km
+NA = 0.2; % Numerical aperture of the fiber
+a = 10; % Core radius of the fiber in microns
+lambda=1.55; % Wavelength of light in microns
+%calculate the power leakage and intrinsic loss
+V = 2 * pi * a * NA / lambda; % V-parameter of the fiber
+w = a*sqrt((2*pi / lambda)^2* NA^2 - 1); % Spot size of the fiber
+Leakage=exp(-2*(w/ a)^2); % Power leakage of the fiber
+IL = alpha * L - 10 * log10(1 - Leakage); % Intrinsic loss of the fiber in dB
+% Display the results
+fprintf('Power leakage: %0.4f\n', Leakage);
+fprintf('Intrinsic loss: %0.4f dB\n', IL);
+
+
+
+
+
+                                EXP - 9
+
+AIM:- Write a program in octave to evaluate power coupling and power radiated by LED
+
+
+
+
+% Define parameters for the LED and coupling optics
+P_LED = 10; % LED optical power in mw
+FWHM=30; % Full-width half-maximum beam angle of the LED in degrees
+d = 5; % Distance between LED and coupling optics in mm
+f =10; % Focal length of the coupling optics in mm
+D_lens=5; % Diameter of the coupling optics in mm
+n_lens = 1.5; % Refractive index of the coupling optics
+% Calculate the power coupling efficiency
+theta_max = deg2rad (FWHM / 2);
+theta_aperture = atan (D_lens / (2 * f));
+eta_coupling = (1 / pi) * ((theta_max / theta_aperture)^2);
+% Calculate the power radiated by the LED
+P_rad = P_LED * (1 - eta_coupling);
+% Display the results
+fprintf('Power coupling efficiency: %0.4f\n', eta_coupling);
+fprintf('Power radiated by LED: %0.4f mW\n', P_rad);
+
+
+
+
+
+
+                                      EXP - 10
+
+AIM :- Write a program in octave to find time to download data from fiber and for Linked Power budget
+
+
+
+% Define parameters for the fiber and system
+L = 100; % Length of the fiber in km
+alpha=0.2; % Attenuation coefficient of the fiber in dB/km
+Ptx = 0.5; % Transmitter output power in mw
+Prx_min = 0.1; % Minimum receiver sensitivity in mW
+Margin=3% Safety margin for link budget in dB
+DataRate =1; % Data rate in Gbps
+% Calculate the attenuation and power budget
+Att = alpha * L; % Total attenuation in de
+Prx = Ptx - Att; % Received power at the end of the fiber in mW
+Budget = Prx-Prx_min - Margin; % Linked power budget in dB
+% Calculate the time to download data
+DataSize = 10; % Size of data in Gb
+DataRate_bps = DataRate * 1e9; % Data rate in bps
+DownloadTime = DataSize / DataRate_bps; % Time to download data in seconds
+% Display the results
+fprintf('Linked power budget: %0.2f dB\n', Budget);
+fprintf('Time to download data: %0.2f seconds \n', DownloadTime);
+
+
+
+
