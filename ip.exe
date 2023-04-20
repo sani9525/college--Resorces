@@ -1,0 +1,456 @@
+DIP Lab
+
+                    EXP - 1
+
+AIM :- WRITE A OCTAVE PROGRAM TO DO THE FOLLOWING CHANGE IN AN
+IMAGE: COMPLEMENT OF IMAGE,FLIPPING UPSIDE DOWN AND LEFTRIGHT,ROTATION BY 45 DEGREES
+
+
+pkg load image
+img=imread('flowers.jpg');%image read
+subplot(331);%assign position
+imshow(img);%output image
+title("inserted image / original image ");%assign name
+c=bitcmp(img);%perform complement operation
+subplot(332);%assign position
+imshow(c);%output image
+title("complemented image");%assign name
+% Flip the image upside down
+img_ud = flipud(img);
+% Flip the image left to right
+img_lr = fliplr(img);
+% Rotate the image by 45 degrees
+img_rot = imrotate(img, 45);
+subplot(333);
+imshow(img_rot);
+title('Rotated Image');
+subplot(334);
+imshow(img_ud);
+title('Upside Down Image');
+subplot(335);
+imshow(img_lr);
+title('Left-Right Image');
+
+
+
+
+               EXP - 2
+AIM :-
+Write a Octave program to perform following actions on Image:
+1. RGB to HSV image HSV to Gray image
+2. RGB to Gray image
+3. RGB to Binary image
+4. Change Contrast of original image (Very high & Very Low).
+
+
+pkg load image%load image
+img=imread('flowers.jpg');%read image
+subplot(331);%assign position
+imshow(img);%output image
+title('original image');%assign name
+b=rgb2hsv(img);%perform rgb to hsv operation
+subplot(332);%assign position
+imshow(b);%output image
+title('original image converted to hsv');%assign name
+c=rgb2gray(b);%perform rgb to Gray operation
+subplot(333);%assign p[osition
+imshow(c);%output image
+title('original image converted to gray');%assign name
+e=im2bw(img);%perform image to binary operation
+subplot(334);%assign position
+imshow(e);%output image
+title('original image converted to binary');%assign name
+% Change the contrast of the image to very high
+img_high = imadjust(img, stretchlim(img), [0 1]);
+% Change the contrast of the image to very low
+img_low = imadjust(img, [0 1], stretchlim(img));
+% Display the original and contrast-adjusted images
+subplot(335);
+imshow(img_high);
+title('High Contrast Image');
+subplot(336);
+imshow(img_low);
+title('Low Contrast Image');
+% Convert the V channel of the HSV image to grayscale
+img_gray = b(:,:,3);
+subplot(337);
+imshow(img_gray);
+title('Grayscale Image obtained by hsv image');
+
+
+
+
+
+
+                      EXP - 3
+AIM :-
+TO PERFORM SAMPLING UPON AN IMAGE IN OCTAVE .
+
+
+clc;%clear command
+clear all;%clear command
+close all;%clear command
+pkg load image;%load iamge
+n=8;%assign value for a variable
+i=imread('flowers.jpg');%input image
+subplot(2,2,1);%assign position
+imshow(i);%output image
+title('origianl iamge');%assign name
+img = rgb2gray(imread('flowers.jpg'));%perform rgb to gray operation
+a=size(img);%get image size
+w=a(2);%assign width of image
+h=a(1);%assign height of an image
+im=zeros(100);%assign extra pixesl im to the image
+for i=1:n:h%run for loop
+ for j=1:n:w%run for loop
+     for k=0:n-1
+         for l=0:n-1
+             im(i+k,j+l)=img(i,j);
+
+ end
+ end
+ end
+end
+subplot(2,2,2);%assign position
+imshow(uint8(img));title('Original Image converted to gray');%outptut image after opertaion
+subplot(2,2,3);%assign position
+imshow(uint8(im));title('Sampled Image');%output image and assig name to it
+
+
+
+
+
+                    EXP - 4
+
+
+AIM :- WRITE A PROGRAM IN OCTAVE TO IMPLEMENT THE FOLLOWING MODIFICATION OF AN IMAGE: 
+1.	SMOOTHING OR AVERAGE FILTER IN SPATIAL DOMAIN. 
+2.	TO FILL THE REGION OF INTEREST FOR THE IMAGE. 
+3.	TO DRAWING A LINE AND A RECTANGLE ON IMAGE.
+
+
+
+pkg load image
+img=imread('flowers.jpg');
+a=img;
+% Convert the image to grayscale
+img = rgb2gray(img);
+% Create a mean filter
+h = fspecial('average', [5 5]);
+% Apply the mean filter to the image
+img_smooth = imfilter(img, h);
+% Display the original and smoothed images
+subplot(221);
+imshow(a);
+title('Original Image');
+subplot(222);
+imshow(img_smooth);
+title('Smoothed Image');
+% Define the region of interest
+roi = [50 50 150 150];
+% Fill the region of interest with a color
+img(roi(2):roi(2)+roi(4), roi(1):roi(1)+roi(3), :) = 255;
+% Display the modified images
+subplot(223);
+imshow(img);
+title('Modified Image');
+% Create a figure and display the image
+subplot(224);
+imshow(a);
+title('line and rectangle image');
+hold on;
+% Draw a line on the image
+x = [50 150];
+y = [50 150];
+line(x, y, 'Color', 'r', 'LineWidth', 2);
+% Draw a rectangle on the image
+x = 100;
+y = 100;
+w = 50;
+h = 50;
+rectangle('Position', [x y w h], 'EdgeColor', 'g', 'LineWidth', 2);
+% Release the hold on the image
+hold off;
+
+
+
+
+                           EXP - 5
+
+AIM :- TO PERFORM SOME  MORPHOLOGICAL OPERATIONS ON AN IMAGE SUCH AS :- 
+1.	OPENING.
+2.	CLOSING.
+3.	EROSION.
+4.	DILATION.
+
+
+pkg load image%load image
+i=imread('flowers.jpg');%input image
+de=imread('2nd_pic.jpg');%imput iamge
+b=im2bw(i);%convert image to binary
+se1=strel('square',5);%perforig sterl operation
+io=imopen(b,se1);%opening image
+se2=strel('square',10);%performing sterl operation
+ic=imclose(b,se2);%closing image
+se3=strel('disk' , 11);%perforimg sterl opertaion
+e=imerode(b,se3);%erode image
+se4=strel('ball',5,5);%perforimg sterl opertaion
+d=imdilate(de,se4);%dilate iamge
+subplot(231);%assign position
+imshow(i);%output image
+title('original image');%assign name
+subplot(232);%assign position
+imshow(b);%output image
+title('binary image of orignal image');%assign name
+subplot(233);%assign position
+imshow(io);%output image
+title('iamge after opening operation');%assign name
+subplot(234);%assign position
+imshow(ic);%output image
+title('image after closing operation');%assign name
+subplot(235);%assign position
+imshow(e);%output image
+title('image after erosion');%assign name
+subplot(236);%assign position
+imshow(d);%output image
+title('image after dilate operation ');%assign name
+
+
+
+
+
+
+                             EXP - 6
+
+AIM:- TO OBATIN HISTOGRAM EQUAIZATION OF THE BOTH ORIGINAL AND NEGATIVE IMAGE.
+
+
+
+OCTAVE CODE for NEGATIVE OF AN IMAGE:-
+
+pkg load image
+i=imread('flowers.jpg'); %insert the rgb image
+b=rgb2gray(i); %converting the rgb image to gray
+l=256; %declearing the variable for use
+r=(l-1)-i; %converting the rgb image to negative
+r2=(l-1)-b;%converting the gray image to negative
+subplot(221);%assigning the position
+imshow(i);%output the original image
+title('original rgb image'); %title
+subplot(222);%assigning the position
+imshow(r);%output the negative of the original image
+title('negative of the rgb image'); %title
+subplot(223);%assigning the position
+imshow(b);%output of the gray original image
+title('original gray image');%title
+subplot(224);%assigning the position
+imshow(r2);%output the negative of the gray original image
+title('negative of gray image');%title
+
+
+
+OCTAVE CODE TO PERFORM HISTOGRAM:-
+
+
+% Load the image
+pkg load image
+img = imread('flowers.jpg');
+% Convert the image to grayscale
+img = rgb2gray(img);
+%Perform histogram equalization on the original image
+equ = histeq(img);
+% Create the negative image
+negative_img = 255 - img;
+% Perform histogram equalization on the negative image
+negative_equ = histeq(negative_img);
+% Display the results
+subplot(2, 2, 1), imshow(img), title('Original Image');
+subplot(2, 2, 2), imshow(equ), title('Equalized Image');
+subplot(2, 2, 3), imshow(negative_img), title('Negative Image');
+subplot(2, 2, 4), imshow(negative_equ), title('Equalized Negative Image');
+
+
+
+
+                                EXP - 7
+
+AIM:- TO PERFORM VARIOUS EDGE DETECTION METHODS FOR GIVEIMAGE(PREWITT,SOBEL,ROBERT).
+
+
+% Load image package
+pkg load image;%image load
+% Read image
+im= imread('flowers.jpg');%read image
+% Convert image to grayscale
+im = rgb2gray(im);%convert the image into rgb to gray
+% Perform edge detection using different methods
+bw_roberts = edge(im, 'Roberts');%perform roberts edge
+bw_sobel = edge(im, 'Sobel');%perform sobel edge
+bw_prewitt = edge(im, 'Prewitt');%perform prewitt edgr
+% Display results
+subplot(221);%assign position
+imshow(im);%outptu image
+title('original image conveted to gray');%assign name
+subplot(222);%assign position
+imshow(bw_roberts);%outptu image
+title('roberts edge detection');%assign name
+subplot(223);%assign position
+imshow(bw_sobel);%outptu image
+title('sobel edge detection');%assign name
+subplot(224);%assign position
+imshow(bw_prewitt);%outptu image
+title('prewitt edge detection');%assign name.
+
+
+
+
+
+                    EXP - 8
+
+AIM :- USE LOGICAL(OR/AND/NOT)AND ARITHEMATIC(+,-) OPERATIONS WITH DIFFERENT IN AGES.
+
+
+
+% Load image package
+pkg load image;
+% Read first image
+im1 = imread('flowers.jpg');
+%pereform rgb to grtay image
+i1=rgb2gray(im1);
+% Read second image
+im2 = imread('flowers.jpg');
+%pereform rgb to grtay image
+i2=rgb2gray(im2);
+% Perform logical NOT operation on first image
+im1_not = not(i1);
+% Perform logical AND operation on both images
+im_and = and(i1, i2);
+% Perform logical OR operation on both images
+im_or = or(i1, i2);
+% Perform addition on both images
+im_add = i1 + i2;
+% Perform subtraction on both images
+im_sub = i1 - i2;
+% Display results
+subplot(331);%assign position
+imshow(im1);%output the image
+title('original image 1');%assign name
+subplot(332);%assign position
+imshow(im2);%output the image
+title('original image 2');%assign name
+subplot(333);%assign position
+imshow(i1);%output the image
+title('gray original image 1');%assign name
+subplot(334);%assign position
+imshow(i2);%output the image
+title(' gray original image 2');%assign name
+subplot(335);%assign position
+imshow(im1_not );%output the image
+title('not operation on gray original image 1');%assign name
+subplot(336);%assign position
+imshow(im_and);%output the image
+title('and operation on gray original image 1 ,2');%assign name
+subplot(337);%assign position
+imshow(im_or);%output the image
+title('or operation on  gray original image 1 ,2');%assign name
+subplot(338);%assign position
+imshow(im_add);%output the image
+title('add operation on  gray original image 1 ,2');%assign name
+subplot(339);%assign position
+imshow(im_sub);%output the image
+title('sub operation on gray original image 1 ,2');%assign name
+
+
+
+
+                           EXP - 9
+
+AIM  :-
+      PERFORM THE  FOLLOWING :-
+1.	REMOVE ALTERNATIVE ROWS AND COLOUMNS OF AN IMAGE.
+2.	SHOW EVERY COLOUR COMPONENT  OF AN IMAGE.
+
+
+
+pkg load image
+img = imread('flowers.jpg'); % Read the image
+a=img;
+i= img(1:5:end,1:5:end, :); % Remove alternate rows and columns
+figure; % Create a new figure
+title('output image after  removing  alternate rowsa nad coloumns ');
+subplot(231);
+ imshow(img);
+ title('Original Image'); % Display the original image
+subplot(233);
+imshow(i);%displaying the output image
+title('image after removvveing  alternative  rows and coloumns');
+% obtain red componentt of the image
+img(:,:,2)=0;
+img(:,:,3)=0;
+subplot(236);
+imshow(img);
+title('red component image');
+%obtain green component of the image
+img=a;
+img(:,:,1)=0;
+img(:,:,3)=0;
+subplot(234);
+imshow(img);
+title('green  component of image');
+% obtain blue component of  the image
+img=a;
+img(:,:,1)=0;
+img(:,:,2)=0;
+subplot(235);
+imshow(img);
+title('blue component of the image ');
+
+
+
+
+                             EXP - 10
+
+AIM :- TO PERFORM THE FOLLOWING :-
+1.	 USE GAMMA CORRECTION ON A RGB IMAGE.
+2.	USE BIT PLANE SLICING FOR AN IMAGE.
+3.	TO PERFORM FFT AND ITS SHIFT AND INVERSE OF AN IMAGE IN OCTAVE.
+
+
+
+pkg load image
+img=imread('flowers.jpg');%load image
+img=im2uint8(img);%convert the bits of an image
+a=rgb2gray(img);%convert the image to gray
+r = double(img)/255;%assign the value for a varaible
+c = 1;%assign the value for a varaible
+gamma = 0.6;%assign the value for a varaible
+s = c * (r).^gamma;%assign the value for a varaible
+F = fft2(img); % Compute the 2D FFT of the image
+Fsh = fftshift(F); % Shift the zero-frequency component to the center of the spectrum
+imgInv = ifft2(Fsh); % Compute the inverse 2D FFT of the shifted spectrum
+subplot(321);%assign position
+imshow(img);%output image
+title('original image');%assign name
+subplot(322);%assign position
+imshow(s);%output image
+title('after performing gaama correction image looks like');%assign name
+subplot(323);%assign position
+img_1 = real(Fsh);%load image to formats
+imshow(img_1, []);%output image
+title('fft shift of the original image');%assign name
+subplot(324);%assign position
+imgReal = real(imgInv);
+imshow(imgReal, []);%output image
+title('ifft of the original image');%assign name
+img = im2uint8(a); % Convert the image to 8-bit unsigned integer
+bit_planes = zeros(size(a, 1), size(a, 2), 8); % Initialize an array to store the bit planes
+
+for i = 1:8
+    bit_planes(:, :, i) = bitget(a, i); % Extract the i-th bit plane
+end
+figure;
+for i = 1:8
+    subplot(2, 4, i);%assign position
+    imshow(bit_planes(:, :, i));%output image
+    title(['Bit plane ', num2str(i)]);%assign name
+end
